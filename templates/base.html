@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>{% block title %}Conference{% endblock %}</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+ <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+<div class="bg">
+
+ <ul class="bar">
+     <li class="bar_element"><a href="/"class="active">Home</a></li>
+     <li class="bar_element"><a href="#My profile">My profile</a></li>
+     <li class="bar_element"><a href="#Events">Events</a></li>
+     {% block rightbar %}<li style="float:right" class="bar_element"><a class="active" href="login/">Log In</a></li>{% endblock %}
+</ul>
+
+{% block content %}
+<div style="padding-left:16px">
+  <h2>Responsive Login Form in Navbar</h2>
+  <p>Navigation menu with a login form and a submit button inside of it.</p>
+  <p>Resize the browser window to see the responsive effect.</p>
+
+
+</div>
+{% endblock %}
+</div>
+</body>
+</html>

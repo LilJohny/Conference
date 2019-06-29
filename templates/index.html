@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Conference{% endblock %}
+
+{% block rightbar %}
+{% if user.is_authenticated %}
+
+    <li style="float:right" class="bar_element"><a class="active" href="#">Signed as {{ user.username }}</a></li>
+
+    <li style="float:right" class="bar_element"><a href="{% url 'logout' %}">Log Out</a></li>
+{% else %}
+    <li style="float:right" class="bar_element"><a class="active">You are not logged in</a></li>
+    <li style="float:right" class="bar_element"><a href="{% url 'login' %}">Log In</a></li>
+{% endif %}
+{% endblock %}
+{% block content %}
+<ul>
+  {% for event in events %}:
+  <li>{{event.title}} by {{ event.presenter}} at {{event.datetime}}</li><br>
+  {%endfor%}
+</ul>
+{% endblock %}
