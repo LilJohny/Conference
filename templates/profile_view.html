@@ -5,7 +5,7 @@
 {% block rightbar %}
     {{ block.super }}
     {% if profile.user.id == user_id %}
-    <li style="float:right" class="bar_element"><a href="profile/edit">Edit profile</a></li>
+    <li style="float:right" class="bar_element"><a href="/profile/edit">Edit profile</a></li>
     {% endif %}
 {% endblock %}
 
@@ -16,6 +16,7 @@
         <div class="fb-profile">
             <div class="fb-profile-text">
                 <h1 style="text-align: center;color: white">{{ profile.user.first_name }} {{ profile.user.last_name }}</h1>
+                <h1 style="color: whitesmoke; text-align: left;font-size: 20px">Birthdate: {{ profile.birth_date }}</h1>
                 <h1 style="text-align: center;color: white"> @{{ profile.user.username }}</h1>
                 <pre>Bio: {{ profile.bio }}</pre>
 

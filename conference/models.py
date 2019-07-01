@@ -4,12 +4,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 
-class Schedule(models.Model):
-    pass
-
-
 class Room(models.Model):
-    schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE)
     number = models.IntegerField()
     address = models.CharField(max_length=125)
 
@@ -17,12 +12,31 @@ class Room(models.Model):
         return f"Room #{self.number} at {self.address}"
 
 
+class Schedule(models.Model):
+    room = models.OneToOneField(Room, on_delete=models.CASCADE, null=True, blank=True)
+
+    @receiver(post_save, sender=Room)
+    def create_user_profile(sender, instance, created, **kwargs):
+        if created:
+            Schedule.objects.create(room=instance)
+
+    def __str__(self):
+        return f"Schedule for room #{self.room.number}"
+
+
 class Presentation(models.Model):
+    schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE, blank=True, null=True)
     presenter = models.ForeignKey(User, on_delete=models.CASCADE, blank=True)
     datetime = models.DateTimeField()
     title = models.CharField(max_length=125)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
     description = models.CharField(max_length=350, default="")
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        schedule = Schedule.objects.filter(room=self.room)[0]
+        self.schedule = schedule
+        self.save_base()
 
     def __str__(self):
         return f"Presentation {self.title}"

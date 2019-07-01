@@ -9,7 +9,7 @@ from django.views.generic import DetailView, CreateView, ListView, UpdateView, F
 from django.views.generic.base import TemplateView
 
 from conference.forms import PresentationFrom, ProfileForm
-from conference.models import Presentation, Profile
+from conference.models import Presentation, Profile, Room
 
 
 class RegisterFormView(FormView):
@@ -69,6 +69,7 @@ class ProfileDetailView(DetailView):
         context['events'] = profile.attend_presentations.all()
         context['author_events'] = Presentation.objects.filter(presenter=profile.user)
         context['profile'] = profile
+        context['user_id'] = self.request.user.id
         context['creator'] = profile.user.has_perm('conference.can_create_presentations')
 
         return context
@@ -121,11 +122,15 @@ class PresentationsListView(ListView):
 class AllPresentationsListView(ListView):
     model = Presentation
     paginate_by = 10
-    template_name = 'presentations_list.html'
+    template_name = 'presentation_all.html'
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['name'] = "All presentations"
+
+        context['rooms'] = Room.objects.all()
+        context['presentations'] = {}
+        for room in context['rooms']:
+            context['presentations'][room] = Presentation.objects.filter(room=room)
         context['creator'] = self.request.user.has_perm('conference.can_create_presentations')
         return context
 
@@ -175,3 +180,4 @@ def event_signup(request, event_id):
 
 def index(requset):
     return render(requset, 'index.html')
+

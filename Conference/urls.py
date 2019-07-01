@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
+from rest_framework import routers
 from conference.views import room_schedule, HomeView, PresentationCreateView, PresentationDetailView, \
     PresentationsListView, PresentationUpdateView, RegisterFormView, event_signup, ProfileDetailView, ProfileEditView, \
     AllPresentationsListView
@@ -37,3 +37,4 @@ urlpatterns = [
     path('presentations/<int:event_id>/signup', event_signup)
 ]
 
+router = routers.DefaultRouter()

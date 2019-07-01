@@ -1,0 +1,16 @@
+{% extends 'index.html' %}
+{% load conference_extras %}
+{% block content %}
+    {% for room in rooms %}
+        <div class="container">
+            <h2 style="color: whitesmoke">Room #{{ room.number }} at {{ room.address }}</h2>
+            <ul class="list-group">
+            {% for event in presentations|get_item:room %}
+                <li class="list-group-item"><a href="/presentations/{{ event.id }}">{{ event.datetime }} - {{ event.room }} - {{ event.title }} by {{ event.presenter }}</a></li>
+            {% empty %}
+                <li><a style="color: white">No presentations yet.</a></li>
+            {% endfor %}
+            </ul>
+        </div>
+    {% endfor %}
+{% endblock %}

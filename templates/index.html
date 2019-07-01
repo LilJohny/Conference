@@ -8,8 +8,8 @@
     <li style="float:right" class="bar_element"><a class="active" href="#">Signed as {{ user.username }}</a></li>
     <li style="float:right" class="bar_element"><a href="{% url 'logout' %}">Sign Out</a></li>
     {% if creator %}
-        <li style="float:right" class="bar_element"><a href="presentations/create">Create presentation</a></li>
-        <li style="float:right" class="bar_element"><a href="presentations/my">My presentations</a></li>
+        <li style="float:right" class="bar_element"><a href="/presentations/create">Create presentation</a></li>
+        <li style="float:right" class="bar_element"><a href="/presentations/my">My presentations</a></li>
         {% endif %}
 {% else %}
     <li style="float:right" class="bar_element"><a class="active">You are not logged in</a></li>

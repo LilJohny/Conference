@@ -1,7 +1,10 @@
 {% extends 'index.html' %}
 {% block content %}
+
     <div class="container">
   <h2>{{ name }}</h2>
+
+
 <ul class="list-group">
 {% for event in object_list %}
     <li class="list-group-item"><a href="/presentations/{{ event.id }}">{{ event.datetime }} - {{ event.room }} - {{ event.title }} by {{ event.presenter }}</a></li>
