@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %} Editing Presentation{% endblock %}
+{% block rightbar %}
+    <li style="float:right" class="bar_element"><a class="active" href="#">Signed as {{ user.username }}</a></li>
+    <li style="float:right" class="bar_element"><a href="{% url 'logout' %}">Sign Out</a></li>
+{% endblock %}
+{% block styles %}
+    label{
+  color: white;
+    }
+
+{% endblock %}
+{% block content %}
+    <form action="" method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Save">
+</form>
+{% endblock %}

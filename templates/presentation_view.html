@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% block title %}Presentation {{ object.title }}{% endblock %}
+{% block rightbar %}
+    <li style="float:right" class="bar_element"><a class="active" href="#">Signed as {{ user.username }}</a></li>
+    <li style="float:right" class="bar_element"><a href="{% url 'logout' %}">Sign Out</a></li>
+    {% if author %}
+         <li style="float:right" class="bar_element"><a href="{{ object.event_id }}/edit">Edit this presentation</a></li>
+        {% else %}
+        {% if can_attend and not signed_up %}
+            <li style="float:right" class="bar_element"><a href="{{ object.event_id }}/signup">Sign up for this presentation</a></li>
+        {% endif %}
+    {% endif %}
+{% endblock %}
+{% block styles %}
+form{
+    text-align: center;
+}
+www.ibrahimjabbari.com */
+@import url(https://fonts.googleapis.com/css?family=Arvo:700);
+@import url(https://fonts.googleapis.com/css?family=Seaweed+Script);
+body {
+  background-color: #222;
+}
+.plate {
+  width: 410px;
+  margin: 10% auto;
+}
+.shadow {
+  color: #fff;
+  font-family: Arvo;
+  font-weight: bold;
+  text-shadow:
+    -3px -3px 0 #222,
+    3px -3px 0 #222,
+    -3px 3px 0 #222,
+    3px 3px 0 #222,
+    4px 4px 0 #fff,
+    5px 5px 0 #fff,
+    6px 6px 0 #fff,
+    7px 7px 0 #fff;
+  line-height: 0.8em;
+  letter-spacing: 0.1em;
+  transform: scaleY(0.7);
+  -webkit-transform: scaleY(0.7);
+  -moz-transform: scaleY(0.7);
+  margin:0;
+  text-align: center;
+}
+    .text {
+        font-size: 60px;
+        color:#fff;
+        text-align:center;
+    }
+    .description {
+        font-size: 35px;
+        text-align:center
+    }
+    .text3 {
+        font-size: 100px;
+    }
+    pre {
+        display: block;
+        padding: 9.5px;
+        margin: 0 0 10px;
+        font-size: 13px;
+        line-height: 1.42857143;
+        color: #333;
+        word-break: break-all;
+        word-wrap: break-word;
+        background-color: #f5f5f5;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    .alert {
+        font-size: 25px;
+        text-align:center;
+        color: darkred;
+    }
+{% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="fb-profile">
+                <div class="fb-profile-text">
+                    <h1 class="shadow text3">{{ object.title }}</h1><br>
+                    <pre style="font-size: 20px;">{{ object.description }}</pre>
+                    <p  class="text">Presenter: <a style="color: #009933" href="/profile/{{ object.presenter.id }}"> {{ object.presenter }}</a></p>
+                    <p  class=" text" >Where: {{ object.room.number }} at {{ object.room.address }}</p>
+                    <p  class=" text">When: {{ object.datetime }}</p>
+                    <p style="text-align: right;font-size: 30px" class="text">Listeners now: {{ object.profile_set.count }}</p>
+     {% if not author  %}
+        {% if not can_attend %}
+            <p class="alert">You can no longer register for this event.</p>
+        {% endif %}
+    {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

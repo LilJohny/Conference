@@ -1,0 +1,41 @@
+{% extends 'index.html' %}
+{% block title %}
+    My profile
+{% endblock %}
+{% block rightbar %}
+    {{ block.super }}
+    {% if profile.user.id == user_id %}
+    <li style="float:right" class="bar_element"><a href="profile/edit">Edit profile</a></li>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+    <div class="container">
+        <div class="fb-profile">
+            <div class="fb-profile-text">
+                <h1 style="text-align: center;color: white">{{ profile.user.first_name }} {{ profile.user.last_name }}</h1>
+                <h1 style="text-align: center;color: white"> @{{ profile.user.username }}</h1>
+                <pre>Bio: {{ profile.bio }}</pre>
+
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <h2 style="color: white">Author of these events:</h2>
+                  <ul class="list-group">
+                {% for event in author_events %}
+                    <li class="list-group-item"><a href="/presentations/{{ event.id }}">{{event.title}} by {{ event.presenter}} at {{event.datetime}}</a></li>
+                {% endfor %}
+                  </ul>
+    </div>
+    <div class="container">
+        <h2 style="color: white">Will visit these events:</h2>
+                  <ul class="list-group">
+                {% for event in events %}
+                    <li class="list-group-item"><a href="/presentations/{{ event.id }}">{{event.title}} by {{ event.presenter}} at {{event.datetime}}</a></li>
+                {% endfor %}
+                  </ul>
+    </div>
+{% endblock %}

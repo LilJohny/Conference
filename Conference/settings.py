@@ -50,7 +50,6 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'Conference.urls'
 
-
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',

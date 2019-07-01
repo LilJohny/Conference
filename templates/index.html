@@ -6,17 +6,25 @@
 {% if user.is_authenticated %}
 
     <li style="float:right" class="bar_element"><a class="active" href="#">Signed as {{ user.username }}</a></li>
-
-    <li style="float:right" class="bar_element"><a href="{% url 'logout' %}">Log Out</a></li>
+    <li style="float:right" class="bar_element"><a href="{% url 'logout' %}">Sign Out</a></li>
+    {% if creator %}
+        <li style="float:right" class="bar_element"><a href="presentations/create">Create presentation</a></li>
+        <li style="float:right" class="bar_element"><a href="presentations/my">My presentations</a></li>
+        {% endif %}
 {% else %}
     <li style="float:right" class="bar_element"><a class="active">You are not logged in</a></li>
-    <li style="float:right" class="bar_element"><a href="{% url 'login' %}">Log In</a></li>
+    <li style="float:right" class="bar_element"><a href="{% url 'login' %}">Sign In</a></li>
+    <li style="float:right" class="bar_element"><a href="accounts/register">New user? Sign up</a></li>
+
 {% endif %}
 {% endblock %}
 {% block content %}
-<ul>
-  {% for event in events %}:
-  <li>{{event.title}} by {{ event.presenter}} at {{event.datetime}}</li><br>
-  {%endfor%}
-</ul>
+<div class="container">
+  <h2>Recent Events</h2>
+  <ul class="list-group">
+      {% for event in events %}
+          <li class="list-group-item"><a href="/presentations/{{ event.id }}">{{event.title}} by {{ event.presenter}} at {{event.datetime}}</a></li>
+      {% endfor %}
+  </ul>
+</div>
 {% endblock %}
