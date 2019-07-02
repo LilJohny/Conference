@@ -14,7 +14,8 @@ from rest_framework import generics
 from rest_framework.decorators import api_view
 from rest_framework.reverse import reverse
 from rest_framework.response import Response
-from conference.serializers import PresentationSerializer, UserSerializer, RoomSerializer, ScheduleSerializer, GroupSerializer
+from conference.serializers import PresentationSerializer, UserSerializer, RoomSerializer, ScheduleSerializer, \
+    GroupSerializer
 
 
 class RegisterFormView(FormView):
@@ -33,7 +34,7 @@ class HomeView(TemplateView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         events = Presentation.objects.all().order_by('datetime')
-        context['events'] = events.filter(datetime__gte=datetime.datetime.now())
+        context['events'] = events.filter(datetime__gte=datetime.datetime.now())[:10]
         return context
 
     def get(self, request, *args, **kwargs):
@@ -157,6 +158,7 @@ class PresentationDetailView(DetailView):
         now = now.replace(tzinfo=pytz.UTC)
         time = self.object.datetime
         time += datetime.timedelta(hours=3)
+        now = now.replace(tzinfo=None)
         context['can_attend'] = time > now
         current_user = self.request.user
         authors = self.object.presenters.all()
@@ -170,7 +172,9 @@ class PresentationDetailView(DetailView):
         return context
 
     def get_object(self, queryset=None):
+        print(self.request)
         event_id = self.kwargs.get("event_id")
+
         return Presentation.objects.filter(id=event_id)[0]
 
 

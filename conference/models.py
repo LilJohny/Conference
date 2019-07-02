@@ -16,7 +16,7 @@ class Schedule(models.Model):
     room = models.OneToOneField(Room, on_delete=models.CASCADE, null=True, blank=True)
 
     @receiver(post_save, sender=Room)
-    def create_user_profile(sender, instance, created, **kwargs):
+    def create_room_schedule(sender, instance, created, **kwargs):
         if created:
             Schedule.objects.create(room=instance)
 
