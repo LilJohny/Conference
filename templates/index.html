@@ -5,7 +5,7 @@
 {% block rightbar %}
 {% if user.is_authenticated %}
 
-    <li style="float:right" class="bar_element"><a class="active" href="#">Signed as {{ user.username }}</a></li>
+    <li style="float:right" class="bar_element"><a class="active">Signed as {{ user.username }}</a></li>
     <li style="float:right" class="bar_element"><a href="{% url 'logout' %}">Sign Out</a></li>
     {% if creator %}
         <li style="float:right" class="bar_element"><a href="/presentations/create">Create presentation</a></li>
@@ -23,7 +23,7 @@
   <h2>Recent Events</h2>
   <ul class="list-group">
       {% for event in events %}
-          <li class="list-group-item"><a href="/presentations/{{ event.id }}">{{event.title}} by {{ event.presenter}} at {{event.datetime}}</a></li>
+          <li class="list-group-item"><a href="/presentations/{{ event.id }}">{{event.title}}  on {{event.datetime}}</a></li>
       {% endfor %}
   </ul>
 </div>

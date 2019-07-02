@@ -17,7 +17,7 @@
 </style>
 </head>
 <body>
-<div class="bg">
+
 
  <ul class="bar">
      <li class="bar_element"><a href="/"class="active">Recent events</a></li>
@@ -26,16 +26,15 @@
  <!--<li style="float:right" class="bar_element"><a class="active" href="login/">Log In</a></li>-->
      {% block rightbar %}{% endblock %}
 </ul>
-
+<div class="bg">
 {% block content %}
 <div style="padding-left:16px">
   <h2>Responsive Login Form in Navbar</h2>
   <p>Navigation menu with a login form and a submit button inside of it.</p>
   <p>Resize the browser window to see the responsive effect.</p>
-
-
-</div>
+    
 {% endblock %}
+</div>
 </div>
 </body>
 </html>

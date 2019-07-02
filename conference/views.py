@@ -67,11 +67,10 @@ class ProfileDetailView(DetailView):
         else:
             profile = Profile.objects.filter(user_id=self.kwargs['user_id'])[0]
         context['events'] = profile.attend_presentations.all()
-        context['author_events'] = Presentation.objects.filter(presenter=profile.user)
+        context['author_events'] = Presentation.objects.filter(presenters__in=[profile.user])
         context['profile'] = profile
         context['user_id'] = self.request.user.id
         context['creator'] = profile.user.has_perm('conference.can_create_presentations')
-
         return context
 
 
@@ -82,10 +81,12 @@ class PresentationCreateView(CreateView):
 
     def form_valid(self, form):
         title, description, datetime, room = form.cleaned_data['title'], form.cleaned_data['description'], \
-                                             form.cleaned_data['datetime'], form.cleaned_data['room']
-        user = User.objects.filter(username=self.request.user.username, password=self.request.user.password)[0]
-        presentation = Presentation(presenter=user, title=title, description=description, datetime=datetime,
+                                                         form.cleaned_data['datetime'], form.cleaned_data['room']
+
+        presentation = Presentation(title=title, description=description, datetime=datetime,
                                     room=room)
+        presentation.save()
+        presentation.presenters.set(form.cleaned_data['presenters'])
         presentation.save()
 
         return HttpResponseRedirect("/")
@@ -94,35 +95,38 @@ class PresentationCreateView(CreateView):
 class PresentationUpdateView(UpdateView):
     template_name = 'presentation_update.html'
     model = Presentation
-    fields = ['title', 'description', 'room', 'datetime']
+    form_class = PresentationFrom
 
     def get_object(self, queryset=None):
         event_id = self.kwargs['event_id']
-        return Presentation.objects.filter()[0]
+        return Presentation.objects.filter(id=event_id)[0]
 
     def get_success_url(self):
-        return f"/presentations/{self.object.event_id}"
+        return f"/presentations/{self.object.id}"
 
 
 class PresentationsListView(ListView):
     model = Presentation
     paginate_by = 20
     template_name = 'presentations_list.html'
+    ordering = ['datetime']
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
         context['name'] = "My presentations"
+        context['creator'] = self.request.user.has_perm('conference.can_create_presentations')
         return context
 
     def get_queryset(self):
-        user = User.objects.filter(username=self.request.user.username, password=self.request.user.password)[0]
-        return Presentation.objects.filter(presenter=user)
+        user = self.request.user
+        return Presentation.objects.filter(presenters__in=[user])
 
 
 class AllPresentationsListView(ListView):
     model = Presentation
     paginate_by = 10
     template_name = 'presentation_all.html'
+    ordering = ['datetime']
 
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -147,15 +151,17 @@ class PresentationDetailView(DetailView):
         now = datetime.datetime.now()
         now = now.replace(tzinfo=pytz.UTC)
         time = self.object.datetime
-        time = time.replace(tzinfo=pytz.UTC)
+        time += datetime.timedelta(hours=3)
         context['can_attend'] = time > now
         current_user = self.request.user
-        author = self.object.presenter
+        authors = self.object.presenters.all()
+        context['presenters'] = authors
         context['signed_up'] = self.object.profile_set.filter(user=current_user).exists()
-        if current_user.username == author.username and current_user.password == author.password:
+        if current_user in authors:
             context['author'] = True
         else:
             context['author'] = False
+        context['creator'] = self.request.user.has_perm('conference.can_create_presentations')
         return context
 
     def get_object(self, queryset=None):
@@ -163,21 +169,10 @@ class PresentationDetailView(DetailView):
         return Presentation.objects.filter(id=event_id)[0]
 
 
-def room_schedule(request, room_number):
-    events = Presentation.objects.filter(room__number=room_number)
-    return render(request, 'room.html', {'room_number': room_number, 'events': events},
-                  )
-
-
 def event_signup(request, event_id):
     user = User.objects.filter(username=request.user.username, password=request.user.password)[0]
-    presentation = Presentation.objects.filter(event_id=event_id)[0]
+    presentation = Presentation.objects.filter(id=event_id)[0]
     profile_set = Profile.objects.filter(user=user)
     presentation.profile_set.set(presentation.profile_set.union(profile_set))
     presentation.save()
     return HttpResponseRedirect(f"/presentations/{event_id}")
-
-
-def index(requset):
-    return render(requset, 'index.html')
-

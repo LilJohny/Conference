@@ -10,7 +10,7 @@ from conference.models import Presentation, Profile
 class PresentationFrom(forms.ModelForm):
     class Meta:
         model = Presentation
-        fields = ['title', 'description', 'datetime', 'room']
+        fields = ['title', 'description', 'datetime', 'room', 'presenters']
 
     def clean(self):
         room, datetime = self.cleaned_data['room'], self.cleaned_data['datetime']
@@ -23,9 +23,6 @@ class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ['bio', 'birth_date']
-
-    def clean(self):
-        k = 0
 
 
 class LoginForm(FormView):

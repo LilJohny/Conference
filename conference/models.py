@@ -26,7 +26,7 @@ class Schedule(models.Model):
 
 class Presentation(models.Model):
     schedule = models.ForeignKey(Schedule, on_delete=models.CASCADE, blank=True, null=True)
-    presenter = models.ForeignKey(User, on_delete=models.CASCADE, blank=True)
+    presenters = models.ManyToManyField(User, blank=True)
     datetime = models.DateTimeField()
     title = models.CharField(max_length=125)
     room = models.ForeignKey(Room, on_delete=models.CASCADE)

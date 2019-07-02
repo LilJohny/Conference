@@ -24,12 +24,14 @@
         </div>
     </div>
     <div class="container">
-        <h2 style="color: white">Author of these events:</h2>
+    {% if creator %}
+        <h2 style="color: white">Presenter on these events:</h2>
                   <ul class="list-group">
                 {% for event in author_events %}
                     <li class="list-group-item"><a href="/presentations/{{ event.id }}">{{event.title}} by {{ event.presenter}} at {{event.datetime}}</a></li>
                 {% endfor %}
                   </ul>
+    {% endif %}
     </div>
     <div class="container">
         <h2 style="color: white">Will visit these events:</h2>

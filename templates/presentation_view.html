@@ -1,15 +1,23 @@
-{% extends 'base.html' %}
+{% extends 'index.html' %}
 {% block title %}Presentation {{ object.title }}{% endblock %}
 {% block rightbar %}
+
     <li style="float:right" class="bar_element"><a class="active" href="#">Signed as {{ user.username }}</a></li>
     <li style="float:right" class="bar_element"><a href="{% url 'logout' %}">Sign Out</a></li>
     {% if author %}
-         <li style="float:right" class="bar_element"><a href="{{ object.event_id }}/edit">Edit this presentation</a></li>
+         <li style="float:right" class="bar_element"><a href="/presentations/{{ object.id }}/edit">Edit this presentation</a></li>
         {% else %}
         {% if can_attend and not signed_up %}
-            <li style="float:right" class="bar_element"><a href="{{ object.event_id }}/signup">Sign up for this presentation</a></li>
+            <li style="float:right" class="bar_element"><a href="/presentations/{{ object.id }}/signup">Sign up for this presentation</a></li>
+        {% endif %}
+        {% if  signed_up %}
+            <li style="float:right" class="bar_element"><a>You are signed up for this event</a></li>
         {% endif %}
     {% endif %}
+    {% if creator  %}
+        <li style="float:right" class="bar_element"><a href="/presentations/create">Create presentation</a></li>
+        <li style="float:right" class="bar_element"><a href="/presentations/my">My presentations</a></li>
+        {% endif %}
 {% endblock %}
 {% block styles %}
 form{
@@ -83,7 +91,10 @@ body {
                 <div class="fb-profile-text">
                     <h1 class="shadow text3">{{ object.title }}</h1><br>
                     <pre style="font-size: 20px;">{{ object.description }}</pre>
-                    <p  class="text">Presenter: <a style="color: #009933" href="/profile/{{ object.presenter.id }}"> {{ object.presenter }}</a></p>
+                    <p  class="text">Presenters:
+                        {%  for presenter in presenters%}
+                        <a style="color: #009933" href="/profile/{{ presenter.id }}"> {{ presenter }}</a>
+                    {% endfor %}</p>
                     <p  class=" text" >Where: {{ object.room.number }} at {{ object.room.address }}</p>
                     <p  class=" text">When: {{ object.datetime }}</p>
                     <p style="text-align: right;font-size: 30px" class="text">Listeners now: {{ object.profile_set.count }}</p>

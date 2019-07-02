@@ -16,14 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from conference.views import room_schedule, HomeView, PresentationCreateView, PresentationDetailView, \
+from conference.views import HomeView, PresentationCreateView, PresentationDetailView, \
     PresentationsListView, PresentationUpdateView, RegisterFormView, event_signup, ProfileDetailView, ProfileEditView, \
     AllPresentationsListView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('rooms/<int:room_number>/', room_schedule),
     path('', HomeView.as_view(), name='home'),
     path('profile', ProfileDetailView.as_view()),
     path('profile/<int:user_id>', ProfileDetailView.as_view()),
