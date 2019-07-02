@@ -201,7 +201,7 @@ class ScheduleDetail(generics.RetrieveUpdateDestroyAPIView):
     serializer_class = ScheduleSerializer
 
     def get_object(self):
-        return Schedule.objects.filter(pk=self.kwargs['pk'])[0]
+        return Schedule.objects.filter(room__number=self.kwargs['room_number'])[0]
 
 
 class RoomDetail(generics.RetrieveUpdateDestroyAPIView):

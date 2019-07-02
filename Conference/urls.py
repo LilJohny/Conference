@@ -36,7 +36,7 @@ urlpatterns = [
     path('presentations/<int:event_id>/signup', event_signup),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     path('schedules/', ScheduleList.as_view(), name='schedules-list'),
-    path('schedules/<int:pk>/', ScheduleDetail.as_view(), name='schedule-detail'),
+    path('schedules/<int:room_number>/', ScheduleDetail.as_view(), name='schedule-detail'),
     path('rooms/<int:pk>/', RoomDetail.as_view(), name='room-detail'),
     path('users/<int:pk>/', UserDetail.as_view(), name='user-detail'),
     path('groups/<int:pk>', GroupDetail.as_view(), name='group-detail')
