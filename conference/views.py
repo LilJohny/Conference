@@ -2,14 +2,19 @@ import datetime
 
 import pytz
 from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views.generic import DetailView, CreateView, ListView, UpdateView, FormView
 from django.views.generic.base import TemplateView
 
 from conference.forms import PresentationFrom, ProfileForm
-from conference.models import Presentation, Profile, Room
+from conference.models import Presentation, Profile, Room, Schedule
+from rest_framework import generics
+from rest_framework.decorators import api_view
+from rest_framework.reverse import reverse
+from rest_framework.response import Response
+from conference.serializers import PresentationSerializer, UserSerializer, RoomSerializer, ScheduleSerializer, GroupSerializer
 
 
 class RegisterFormView(FormView):
@@ -81,7 +86,7 @@ class PresentationCreateView(CreateView):
 
     def form_valid(self, form):
         title, description, datetime, room = form.cleaned_data['title'], form.cleaned_data['description'], \
-                                                         form.cleaned_data['datetime'], form.cleaned_data['room']
+                                             form.cleaned_data['datetime'], form.cleaned_data['room']
 
         presentation = Presentation(title=title, description=description, datetime=datetime,
                                     room=room)
@@ -176,3 +181,48 @@ def event_signup(request, event_id):
     presentation.profile_set.set(presentation.profile_set.union(profile_set))
     presentation.save()
     return HttpResponseRedirect(f"/presentations/{event_id}")
+
+
+@api_view(['GET'])
+def api_root(request, format=None):
+    return Response({'schedules': reverse('schedule-list', request=request)})
+
+
+class ScheduleList(generics.ListCreateAPIView):
+    model = Schedule
+    serializer_class = ScheduleSerializer
+
+    def get_queryset(self):
+        return Schedule.objects.all()
+
+
+class ScheduleDetail(generics.RetrieveUpdateDestroyAPIView):
+    model = Schedule
+    serializer_class = ScheduleSerializer
+
+    def get_object(self):
+        return Schedule.objects.filter(pk=self.kwargs['pk'])[0]
+
+
+class RoomDetail(generics.RetrieveUpdateDestroyAPIView):
+    model = Room
+    serializer_class = RoomSerializer
+
+    def get_object(self):
+        return Room.objects.filter(pk=self.kwargs['pk'])[0]
+
+
+class UserDetail(generics.RetrieveUpdateDestroyAPIView):
+    model = User
+    serializer_class = UserSerializer
+
+    def get_object(self):
+        return User.objects.filter(pk=self.kwargs['pk'])[0]
+
+
+class GroupDetail(generics.RetrieveUpdateDestroyAPIView):
+    model = Group
+    serializer_class = GroupSerializer
+
+    def get_object(self):
+        return User.objects.filter(pk=self.kwargs['pk'])[0]

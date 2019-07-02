@@ -16,9 +16,9 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework import routers
-from conference.views import HomeView, PresentationCreateView, PresentationDetailView, \
-    PresentationsListView, PresentationUpdateView, RegisterFormView, event_signup, ProfileDetailView, ProfileEditView, \
-    AllPresentationsListView
+from rest_framework.urlpatterns import format_suffix_patterns
+
+from conference.views import *
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,7 +33,14 @@ urlpatterns = [
     path('presentations/<int:event_id>', PresentationDetailView.as_view()),
     path('presentations/my', PresentationsListView.as_view()),
     path('presentations/<int:event_id>/edit', PresentationUpdateView.as_view()),
-    path('presentations/<int:event_id>/signup', event_signup)
+    path('presentations/<int:event_id>/signup', event_signup),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('schedules/', ScheduleList.as_view(), name='schedules-list'),
+    path('schedules/<int:pk>/', ScheduleDetail.as_view(), name='schedule-detail'),
+    path('rooms/<int:pk>/', RoomDetail.as_view(), name='room-detail'),
+    path('users/<int:pk>/', UserDetail.as_view(), name='user-detail'),
+    path('groups/<int:pk>', GroupDetail.as_view(), name='group-detail')
+
 ]
 
-router = routers.DefaultRouter()
+urlpatterns = format_suffix_patterns(urlpatterns, allowed=['json', 'api'])
