@@ -14,7 +14,7 @@
 {% else %}
     <li style="float:right" class="bar_element"><a class="active">You are not logged in</a></li>
     <li style="float:right" class="bar_element"><a href="{% url 'login' %}">Sign In</a></li>
-    <li style="float:right" class="bar_element"><a href="accounts/register">New user? Sign up</a></li>
+    <li style="float:right" class="bar_element"><a href="/accounts/register">New user? Sign up</a></li>
 
 {% endif %}
 {% endblock %}

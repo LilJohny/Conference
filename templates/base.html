@@ -1,40 +1,40 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 
     <title>{% block title %}Conference{% endblock %}</title>
-{% block head %}
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
- <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
-{% endblock %}
-<style>
-    {%  block styles%}
-    {% endblock %}
-</style>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+    <style>
+            {% block styles %}
+            {% endblock %}
+    </style>
 </head>
+
 <body>
 
 
- <ul class="bar">
-     <li class="bar_element"><a href="/"class="active">Recent events</a></li>
-     <li class="bar_element"><a href="/profile">My profile</a></li>
-     <li class="bar_element"><a href="/presentations/all">All Events</a></li>
- <!--<li style="float:right" class="bar_element"><a class="active" href="login/">Log In</a></li>-->
-     {% block rightbar %}{% endblock %}
-</ul>
-<div class="bg">
-{% block content %}
-<div style="padding-left:16px">
-  <h2>Responsive Login Form in Navbar</h2>
-  <p>Navigation menu with a login form and a submit button inside of it.</p>
-  <p>Resize the browser window to see the responsive effect.</p>
-    
-{% endblock %}
-</div>
-</div>
+    <ul class="bar">
+        <li class="bar_element"><a href="/" class="active">Recent events</a></li>
+        <li class="bar_element"><a href="/profile">My profile</a></li>
+        <li class="bar_element"><a href="/presentations/all">All Events</a></li>
+        {% block rightbar %}{% endblock %}
+    </ul>
+    <div class="bg">
+        {% block content %}
+        <div style="padding-left:16px">
+            <h2>Responsive Login Form in Navbar</h2>
+            <p>Navigation menu with a login form and a submit button inside of it.</p>
+            <p>Resize the browser window to see the responsive effect.</p>
+        </div>
+        {% endblock %}
+
+    </div>
 </body>
+
 </html>

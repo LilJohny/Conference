@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block title %} Editing Presentation{% endblock %}
 {% block rightbar %}
-    <li style="float:right" class="bar_element"><a class="active" href="#">Signed as {{ user.username }}</a></li>
+    <li style="float:right" class="bar_element"><a class="active" >Signed as {{ user.username }}</a></li>
     <li style="float:right" class="bar_element"><a href="{% url 'logout' %}">Sign Out</a></li>
 {% endblock %}
 {% block styles %}

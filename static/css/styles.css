@@ -22,13 +22,17 @@ li.bar_element a {
 li.bar_element a:hover {
   background-color: #009933;
 }
-body, html {
+
+body,
+html {
   height: 100%;
 }
-*{
+
+* {
   padding: 0;
   margin: 0;
 }
+
 .bg {
   /* The image used */
   background-image: url("91.jpg");
@@ -41,7 +45,12 @@ body, html {
   background-repeat: no-repeat;
   background-size: cover;
 }
+
 .alert {
- font-size: 100px;
+  font-size: 100px;
   color: darkred;
+}
+
+label {
+  color: white;
 }
