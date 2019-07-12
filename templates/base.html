@@ -4,37 +4,93 @@
 
 <head>
 
-    <title>{% block title %}Conference{% endblock %}</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
-    <style>
-            {% block styles %}
-            {% endblock %}
-    </style>
+  <title>{% block title %}Conference{% endblock %}</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/styles.css' %}">
+  <style>
+    ul.bar {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #333;
+    }
+
+    li.bar_element {
+      float: left;
+    }
+
+    li.bar_element a {
+      display: block;
+      color: white;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+    }
+
+    /* Change the link color to #111 (black) on hover */
+    li.bar_element a:hover {
+      background-color: #009933;
+    }
+
+    body,
+    html {
+      height: 100%;
+    }
+
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    .bg {
+      /* The image used */
+      background-image: url("https://raw.githubusercontent.com/LilJohny/Conference/master/static/css/91.jpg");
+
+      /* Full height */
+      height: 100%;
+
+      /* Center and scale the image nicely */
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: cover;
+    }
+
+    .alert {
+      font-size: 100px;
+      color: darkred;
+    }
+
+    label {
+      color: white;
+    }
+      {% block styles %}
+      {% endblock %}
+  </style>
 </head>
 
 <body>
 
 
-    <ul class="bar">
-        <li class="bar_element"><a href="/" class="active">Recent events</a></li>
-        <li class="bar_element"><a href="/profile">My profile</a></li>
-        <li class="bar_element"><a href="/presentations/all">All Events</a></li>
-        {% block rightbar %}{% endblock %}
-    </ul>
-    <div class="bg">
-        {% block content %}
-        <div style="padding-left:16px">
-            <h2>Responsive Login Form in Navbar</h2>
-            <p>Navigation menu with a login form and a submit button inside of it.</p>
-            <p>Resize the browser window to see the responsive effect.</p>
-        </div>
-        {% endblock %}
-
+  <ul class="bar">
+    <li class="bar_element"><a href="/" class="active">Recent events</a></li>
+    <li class="bar_element"><a href="/profile">My profile</a></li>
+    <li class="bar_element"><a href="/presentations/all">All Events</a></li>
+    {% block rightbar %}{% endblock %}
+  </ul>
+  <div class="bg">
+    {% block content %}
+    <div style="padding-left:16px">
+      <h2>Responsive Login Form in Navbar</h2>
+      <p>Navigation menu with a login form and a submit button inside of it.</p>
+      <p>Resize the browser window to see the responsive effect.</p>
     </div>
+    {% endblock %}
+
+  </div>
 </body>
 
 </html>
