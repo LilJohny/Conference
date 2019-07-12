@@ -66,7 +66,7 @@ TEMPLATES = [
         },
     },
 ]
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+
 WSGI_APPLICATION = 'Conferences.wsgi.application'
 
 # Database
@@ -124,4 +124,5 @@ STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
