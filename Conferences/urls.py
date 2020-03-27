@@ -17,7 +17,9 @@ from django.contrib import admin
 from django.urls import path, include
 from rest_framework.urlpatterns import format_suffix_patterns
 
-from conference.views import *
+from conference.views import HomeView, ProfileDetailView, ProfileEditView, RegisterFormView, AllPresentationsListView, \
+    PresentationCreateView, PresentationDetailView, PresentationsListView, PresentationUpdateView, event_signup, \
+    ScheduleList, ScheduleDetail, RoomDetail, UserDetail, GroupDetail
 
 urlpatterns = [
     path('admin/', admin.site.urls),
