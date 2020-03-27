@@ -15,7 +15,3 @@ class Command(BaseCommand):
                                                name='Can create presentations',
                                                content_type=ct)
         new_group.permissions.add(permission)
-
-
-
-

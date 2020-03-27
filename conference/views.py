@@ -7,14 +7,14 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views.generic import DetailView, CreateView, ListView, UpdateView, FormView
 from django.views.generic.base import TemplateView
+from rest_framework import generics
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.reverse import reverse
 
 from conference.forms import PresentationFrom, ProfileForm
 from conference.models import Presentation, Profile, Room, Schedule
-from rest_framework import generics
-from rest_framework.decorators import api_view
-from rest_framework.reverse import reverse
-from rest_framework.response import Response
-from conference.serializers import PresentationSerializer, UserSerializer, RoomSerializer, ScheduleSerializer, \
+from conference.serializers import UserSerializer, RoomSerializer, ScheduleSerializer, \
     GroupSerializer
 
 
